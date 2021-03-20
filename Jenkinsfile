@@ -15,16 +15,11 @@ pipeline{
                 bat "docker-compose up"
             }
         }
-        stage{
-            steps{
-                bat "docker-compose stop"
-            }
-        }
+
         stage("commiting the deocker images"){
             steps{
                 bat "docker commit kanban-ui bharathvelisala/challenge-ui"
-                bat "docker commit kanban-app bharathvelisala/challenge-app"
-                
+                bat "docker commit kanban-app bharathvelisala/challenge-app" 
             }
         }
 
