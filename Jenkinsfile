@@ -12,15 +12,27 @@ pipeline{
         // }
         stage("docker build"){
             steps{
-                bat "docker-compose up -d"
+                bat "docker-compose up"
             }
         }
-        stage("uploading to docker hub"){
+        stage{
             steps{
-                bat "docker commit kaban-ui bharathvelisala/challenge-ui"
-                bat "docker push bharathvelisala/challenge-ui"
-                bat "docker commit kaban-app bharathvelisala/challenge-app"
-                bat "docker push bharathvelisala/challenge-app"
+                bat "docker-compose stop"
+            }
+        }
+        stage("commiting the deocker images"){
+            steps{
+                bat "docker commit kanban-ui bharathvelisala/challenge-ui"
+                bat "docker commit kanban-app bharathvelisala/challenge-app"
+                
+            }
+        }
+
+        stage("pushing the images to docker hub"){
+            steps{
+                withDockerRegistry([ credentialsId: "83fb3bd9-d130-41d3-b0f9-3599a244c460", url: "" ]) {
+                    bat "docker push bharathvelisala/challenge-app"
+                    bat "docker push bharathvelisala/challenge-ui"
             }
         }
 
