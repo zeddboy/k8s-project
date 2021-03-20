@@ -2,9 +2,17 @@ pipeline{
     agent any
 
     stages{
+
+        // stage("removing docker images if exists"){
+        //     steps{
+        //         bat "docker rm kanban-postgres"
+        //         bat "docker rm kanban-app"
+        //         bat "docker rm kanban-ui"
+        //     }
+        // }
         stage("docker build"){
             steps{
-                bat "docker-compose up"
+                bat "docker-compose up -d"
             }
         }
         stage("uploading to docker hub"){
