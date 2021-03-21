@@ -18,16 +18,16 @@ pipeline{
 
         stage("commiting the deocker images"){
             steps{
-                bat "docker commit kanban-ui bharathvelisala/challenge-ui"
-                bat "docker commit kanban-app bharathvelisala/challenge-app" 
+                bat "docker commit kanban-ui kunalagarwal25/challenge-ui"
+                bat "docker commit kanban-app kunalagarwal25/challenge-app" 
             }
         }
 
         stage("pushing the images to docker hub"){
             steps{
                 withDockerRegistry([ credentialsId: "83fb3bd9-d130-41d3-b0f9-3599a244c460", url: "" ]){
-                    bat "docker push bharathvelisala/challenge-app"
-                    bat "docker push bharathvelisala/challenge-ui"
+                    bat "docker push kunalagarwal25/challenge-app"
+                    bat "docker push kunalagarwal25/challenge-ui"
                 }
             }
         }
