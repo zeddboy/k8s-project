@@ -25,7 +25,7 @@ pipeline{
 
         stage("pushing the images to docker hub"){
             steps{
-                withDockerRegistry([ credentialsId: "83fb3bd9-d130-41d3-b0f9-3599a244c460", url: "" ]){
+                withDockerRegistry([ credentialsId: "dockerid", url: "" ]){
                     bat "docker push kunalagarwal25/challenge-app"
                     bat "docker push kunalagarwal25/challenge-ui"
                 }
