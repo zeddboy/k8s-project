@@ -1,5 +1,10 @@
 pipeline{
-    agent any
+    agent {
+        docker{
+            image 'node:14-alpine'
+        }
+    
+    }
 
     stages{
 
@@ -12,29 +17,29 @@ pipeline{
         // }
         stage("docker build"){
             steps{
-                bat "docker-compose up -d"
+                sh "docker-compose up -d"
             }
         }
 
         stage("commiting the deocker images"){
             steps{
-                bat "docker commit kanban-ui kunalagarwal25/challenge-ui"
-                bat "docker commit kanban-app kunalagarwal25/challenge-app" 
+                sh "docker commit kanban-ui kunalagarwal25/challenge-ui"
+                sh "docker commit kanban-app kunalagarwal25/challenge-app" 
             }
         }
 
         stage("pushing the images to docker hub"){
             steps{
                 withDockerRegistry([ credentialsId: "dockerid", url: "" ]){
-                    bat "docker push kunalagarwal25/challenge-app"
-                    bat "docker push kunalagarwal25/challenge-ui"
+                    sh "docker push kunalagarwal25/challenge-app"
+                    sh "docker push kunalagarwal25/challenge-ui"
                 }
             }
         }
 
         stage("kubernates"){
             steps{
-                bat "kubectl apply -f k8s"
+                sh "kubectl apply -f k8s"
             }
         }
     }
