@@ -22,15 +22,15 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres1
 spec:
   selector:
     matchLabels:                    # This deployment applies to the Pods matching the specified labels
-      app: postgres
+      app: postgres1
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgres1
     spec:
       volumes:
         - name: postgres-storage
@@ -38,7 +38,7 @@ spec:
             claimName: postgres-pvk-claim
       containers:
         - image: postgres
-          name: postgres
+          name: postgres1
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -59,7 +59,7 @@ spec:
               value: /var/lib/postgresql/data/pgdata
           ports:
             - containerPort: 5432
-              name: postgres
+              name: postgres1
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
@@ -67,10 +67,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: postgres1
 spec:
   type: ClusterIP
   ports:
     - port: 5432
   selector:
-    app: postgres
+    app: postgres1
